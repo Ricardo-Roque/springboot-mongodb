@@ -1,5 +1,6 @@
 package org.example.springbootmongodb.services;
 
+import org.example.springbootmongodb.dto.UserRequestDTO;
 import org.example.springbootmongodb.entities.User;
 import org.example.springbootmongodb.repository.UserRepository;
 import org.example.springbootmongodb.services.exception.ObjectNotFoundException;
@@ -23,6 +24,11 @@ public class UserService {
         if (user == null) {
             throw new ObjectNotFoundException("Objeto não encontrado");
         }
+        return user;
+    }
+
+    public User save(UserRequestDTO userRequestDTO) {
+        User user = new User(userRequestDTO.id(), userRequestDTO.name(), userRequestDTO.email());
         return user;
     }
 }

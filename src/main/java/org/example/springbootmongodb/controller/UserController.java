@@ -1,15 +1,15 @@
 package org.example.springbootmongodb.controller;
 
 import org.example.springbootmongodb.dto.UserDTO;
+import org.example.springbootmongodb.dto.UserRequestDTO;
 import org.example.springbootmongodb.entities.User;
 import org.example.springbootmongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -32,5 +32,12 @@ public class UserController {
         User user = userService.findById(id);
         UserDTO userDTO = new UserDTO(user.getId(), user.getName(), user.getEmail());
         return ResponseEntity.ok(userDTO);
+    }
+
+    @PostMapping("/save")
+    public ResponseEntity<Void> save(UserRequestDTO userRequestDTO) {
+        User user = userService.save(userRequestDTO);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 }
