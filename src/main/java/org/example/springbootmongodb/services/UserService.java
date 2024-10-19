@@ -2,6 +2,7 @@ package org.example.springbootmongodb.services;
 
 import org.example.springbootmongodb.entities.User;
 import org.example.springbootmongodb.repository.UserRepository;
+import org.example.springbootmongodb.services.exception.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,5 +16,13 @@ public class UserService {
 
     public List<User> findAll() {
         return userRepository.findAll();
+    }
+
+    public User findById(String id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            throw new ObjectNotFoundException("Objeto não encontrado");
+        }
+        return user;
     }
 }
