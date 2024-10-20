@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity<Void> save(UserRequestDTO userRequestDTO) {
+    public ResponseEntity<Void> save(@RequestBody UserRequestDTO userRequestDTO) {
         User user = userService.save(userRequestDTO);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(user.getId()).toUri();
         return ResponseEntity.created(uri).build();
@@ -44,6 +44,15 @@ public class UserController {
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteById(@PathVariable String id) {
         userService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Void> update(@RequestBody UserRequestDTO userRequestDTO, @PathVariable String id) {
+
+        User newUser = new User(id, userRequestDTO.name(), userRequestDTO.email());
+        userService.update(newUser);
+
         return ResponseEntity.noContent().build();
     }
 }
