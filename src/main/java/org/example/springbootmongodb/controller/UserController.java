@@ -2,6 +2,7 @@ package org.example.springbootmongodb.controller;
 
 import org.example.springbootmongodb.dto.UserDTO;
 import org.example.springbootmongodb.dto.UserRequestDTO;
+import org.example.springbootmongodb.entities.Post;
 import org.example.springbootmongodb.entities.User;
 import org.example.springbootmongodb.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,11 @@ public class UserController {
         userService.update(newUser);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User user = userService.findById(id);
+        return ResponseEntity.ok(user.getPosts());
     }
 }
