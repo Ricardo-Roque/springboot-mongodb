@@ -1,5 +1,6 @@
 package org.example.springbootmongodb.entities;
 
+import org.example.springbootmongodb.dto.AuthorDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -15,17 +16,17 @@ public class Post implements Serializable {
     private Date date;
     private String title;
     private String body;
-    private User author;
+    private AuthorDTO authorDTO;
 
     public Post() {
     }
 
-    public Post(String id, Date date, String title, String body, User author) {
+    public Post(String id, Date date, String title, String body, AuthorDTO authorDTO) {
         this.id = id;
         this.date = date;
         this.title = title;
         this.body = body;
-        this.author = author;
+        this.authorDTO = authorDTO;
     }
 
     public String getId() {
@@ -60,12 +61,12 @@ public class Post implements Serializable {
         this.body = body;
     }
 
-    public User getAuthor() {
-        return author;
+    public AuthorDTO getAuthorDTO() {
+        return authorDTO;
     }
 
-    public void setAuthor(User user) {
-        this.author = user;
+    public void setAuthorDTO(AuthorDTO authorDTODTO) {
+        this.authorDTO = authorDTODTO;
     }
 
     @Override
